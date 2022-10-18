@@ -13,14 +13,13 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-.gradient-bg-welcome {
+ .gradient-bg-welcome {
   background-color:#0f0e13;
   background-image: 
-    radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
-    radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
-    radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
-}
-
+    radial-gradient(at 0% 0%, rgb(135, 88, 255) 0, transparent 50%), 
+    radial-gradient(at 50% 0%, rgb(92, 184, 228) 0, transparent 50%), 
+    radial-gradient(at 100% 0%, rgb(242, 242, 242) 0, transparent 50%);
+} 
 .gradient-bg-services {
   background-color:#0f0e13;
   background-image: 
@@ -43,12 +42,12 @@ body {
 }
 
 .blue-glassmorphism {
-  background: rgb(39, 51, 89, 0.4);
+  background: rgb(238, 241, 255, 0.7);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(5px);
+  box-shadow: 0 4px 30px rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(3px);
   -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(0, 0, 0, 0.3);
+  border: 1px solid rgb(135, 88, 255 , 0.6);
 }
 
 /* white glassmorphism */
