@@ -11,25 +11,26 @@ const getEthereumContract = () => {
     const signer = provider.getSigner();
     const transactionContract = new ethers.Contract(contractAddress, contractABI, signer);
 
-    console.log({
-        provider,
-        signer,
-        transactionContract
-    });
+   return transactionContract; /////
 };
 
-export const TransactionProvider = ({ children}) => {
+export const TransactionProvider = ({ children}) => { 
 
     const [currentAccount, setCurrentAccount] = useState(""); //////////////
-    
+
+    const [formData, setFormData] = useState({addressTo: "", amount: "", keyword: "", message: ""});
+
+    const handleChange = (e, name) => { //all handleChange functions will interact with the form data inputs, except the (e) key event
+        setFormData((prevState) => ({...prevState, [name]: e.target.value}));
+    }
 
     const checkIfWalletIsConnected = async () => {
-        
+
         try {
             if(!ethereum) return alert('Please install MetaMask first');
 
             const accounts = await ethereum.request({ method: 'eth_accounts' });
-        
+
             if(accounts.length){ //her renderda hesaba bağlanacak
             setCurrentAccount(accounts[0]);
             //getAllTransactions();
@@ -40,8 +41,8 @@ export const TransactionProvider = ({ children}) => {
         }
 
         //consolelog(a.ccounts);
-        
-        catch(error) {}
+
+        catch(error) {console.log(error)}
     }
 
     const connectWallet = async () => {
@@ -49,7 +50,7 @@ export const TransactionProvider = ({ children}) => {
             if (!ethereum) return alert("Please install MetaMask.");
 
             const accounts = await ethereum.request({ method: "eth_requestAccounts", });
-      
+
             setCurrentAccount(accounts[0]);
             window.location.reload(); /////////////////
         }
@@ -59,12 +60,31 @@ export const TransactionProvider = ({ children}) => {
         }
     };
 
+    const sendTransaction = async () => {
+        try {
+            if(ethereum){
+                const {addressTo, amount, keyword, message} = formData;
+                getEthereumContract();
+            }
+            // if(!ethereum) return alert ('Please install MetaMask first');
+            // console.log(formData)
+            // //Welcome.jsx'deki formlardan input giriş bilgilerinin alınması
+            // const {addressTo, amount, keyword, message} = formData; //access to form data variables
+            // getEthereumContract();
+
+        }
+        catch(error) {
+            console.log(error);
+            //throw new Error("Couldnt send transaction : No ethereum object.");
+        }
+    };
+
     useEffect (() => {
         checkIfWalletIsConnected();
     }, []);
 
     return(
-        <TransactionContext.Provider value= {{connectWallet, currentAccount}}> 
+        <TransactionContext.Provider value= {{connectWallet, currentAccount, formData, handleChange, sendTransaction}}>
             {children}
         </TransactionContext.Provider>
     )
