@@ -1,6 +1,8 @@
+import React, {useContext} from 'react'
 import { AiFillPlayCircle } from "react-icons/ai";
 import { SiEthereum } from "react-icons/si";
 import { BsInfoCircle } from "react-icons/bs";
+import { TransactionContext } from "../context/TransactionContext";
 import { Loader } from "./";
 
 const commonStyles =
@@ -18,7 +20,12 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 );
 
 const Welcome = () => {
-  const connectWallet = () => {};
+
+
+
+  const {connectWallet, currentAccount} = useContext(TransactionContext);
+  //console.log(value);
+
   const handleChange = () => {};
   const handleSubmit = () => {};
   const isLoading = () => {};
@@ -34,13 +41,15 @@ const Welcome = () => {
             Explore the crytpo world with us. Buy and sell cryptocurrincies
             easily on Krypto.
           </p>
-          <button
+          {!currentAccount && ( //if our account is connected, then we shouldnt be able to see the "Connect Wallet " button 
+
+           <button
             type="button"
             onClick={connectWallet}
             className="flex flex-row justify-center items-center my-5 bg-[#7978FF] p-3 rounded-full cursor-pointer hover:bg-[#4649FF]"
           >
             <p className="text-white text-base font-semibold">Connect Wallet</p>
-          </button>
+          </button> )}
           <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
             <div className={`rounded-tl-2xl ${commonStyles}`}>Reliability</div>
             <div className={commonStyles}>Security</div>
