@@ -1,25 +1,19 @@
-
-
 const main = async () => {
-  const Transactions = await hre.ethers.getContractFactory("Transactions"); // bu sözleşmenin örneklerini üretecek
-  const transactions = await Transactions.deploy(); // örnek oluşturuldu
 
-  await transactions.deployed(); // örnek blockchain'e yüklendi
+  const Transactions = await hre.ethers.getContractFactory("Transactions");
+  const transactions = await Transactions.deploy();
+  await transactions.deployed();
 
-  console.log("Transactions deployed to:", transactions.address); // deploy olunan contract adresi yazdır
+  console.log("Transactions deployed to:", transactions.address);
 
 }
-
-
-
 const runMain = async () => {
   try {
     await main();
-    process.exit(0); //process went successfully
+    process.exit(0); // success
   } catch (error) {
     console.error(error);
-    process.exit(1); //process failed
+    process.exit(1); // failure
   }
 }
-
 runMain();

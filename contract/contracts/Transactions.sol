@@ -1,34 +1,32 @@
-// SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
-
+//SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.7;
 contract Transactions {
-    uint256 transactionCount; //transactionların sayısını tutar
+    uint256 transactionCount;
+    event Transfer(address from, address receiver,uint amount, string message, uint256 timeStamp, string keyword); //event to be emitted when a transaction is made
 
-    event Transfer(address from, address receiver, uint amount, string message, uint256 timestamp, string keyword); //transfer eventi
-  
-    struct TransferStruct { //struct obje tanımlamaya benzer
-        address sender;
+    struct TransferStruct { //struct to store the details of a transaction..
+        address from;
         address receiver;
         uint amount;
         string message;
-        uint256 timestamp;
+        uint256 timeStamp;
         string keyword;
     }
 
-    TransferStruct[] transactions; // transactions değişkenimiz TransferStruct'ın bir array'i olacak 
+    TransferStruct[] transactions;
 
-    function addToBlockchain(address payable receiver, uint amount, string memory message, string memory keyword) public { // contract, sınıf yapısına benzediği için; içinde bir fonksiyon yazıldığında görünürlüğünün de (public vs) belirtilmesi gerekir.
-        transactionCount += 1; // her yeni transfer için transactionCount'ı 1 arttırır
-        transactions.push(TransferStruct(msg.sender, receiver, amount, message, block.timestamp, keyword)); // yeni transfer için struct objesi oluşturur ve transactions array'ine ekler
+    function addToBlockchain (address payable receiver, uint amount, string memory message, string memory keyword) public {
+        transactionCount += 1;
+        transactions.push(TransferStruct(msg.sender, receiver, amount, message, block.timestamp, keyword)); //add a new transaction to the blockchain
 
-        emit Transfer(msg.sender, receiver, amount, message, block.timestamp, keyword);// transfer eventini tetikler
+        emit Transfer(msg.sender, receiver, amount, message, block.timestamp, keyword); //emit the event
+
     }
-
-    function getAllTransactions() public view returns (TransferStruct[] memory) {
+     function getAllTransactions () public view returns(TransferStruct[] memory) { 
         return transactions;
+        
     }
-
-    function getTransactionCount() public view returns (uint256) {
+     function getTransactionCount () public view returns (uint256) {
         return transactionCount;
-    }
+   }
 }
